@@ -1,140 +1,56 @@
 "use client";
 
-import { useWindowState } from "@/src/features";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useWindowState } from "@/src/features/window-manager";
+import { getAppById } from "@/src/entities/app";
+
+import { windowVariants } from "../lib/animations";
+import { WindowTitleBar } from "./WindowTitleBar";
 
 export default function AppWindow() {
-  const [isHoveringControls, setIsHoveringControls] = useState(false);
   const openWindows = useWindowState((state) => state.openWindows);
   const closeWindow = useWindowState((state) => state.closeWindow);
 
   return (
     <AnimatePresence>
-      {openWindows.size > 0 && (
-        <>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => closeWindow(Array.from(openWindows)[0] ?? "")}
-          />
+      {Array.from(openWindows).map((windowId, index) => {
+        const app = getAppById(windowId);
+        if (!app) return null;
 
+        return (
           <motion.div
-            initial={{
-              scale: 0,
-              opacity: 0,
-              y: 100,
-            }}
-            animate={{
-              scale: 1,
-              opacity: 1,
-              y: 0,
-            }}
-            exit={{
-              scale: 0,
-              opacity: 0,
-              y: 100,
-            }}
-            transition={{
-              type: "spring",
-              stiffness: 300,
-              damping: 25,
-            }}
-            className="fixed inset-0 m-auto w-[600px] h-[400px] z-50"
-            onClick={(e) => e.stopPropagation()}
+            key={windowId}
+            variants={windowVariants}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            className="fixed inset-0 m-auto w-[600px] h-[400px]"
+            style={{ zIndex: 50 + index }}
           >
             <div
               className="
               w-full h-full
-              bg-white/95 dark:bg-gray-900/95
-              backdrop-blur-2xl
-              rounded-xl
+              bg-gray-900/95
+              backdrop-blur-2xl rounded-xl
               shadow-[0_20px_60px_rgba(0,0,0,0.3)]
-              border border-black/10 dark:border-white/10
-              overflow-hidden
-              flex flex-col
+              border border-white/10
+              overflow-hidden flex flex-col
             "
             >
-              <div
-                className="
-                  h-12 px-4
-                  flex items-center justify-between
-                  bg-linear-to-b from-black/5 to-transparent
-                  dark:from-white/5
-                  border-b border-black/5 dark:border-white/5
-                "
-                onMouseEnter={() => setIsHoveringControls(true)}
-                onMouseLeave={() => setIsHoveringControls(false)}
-              >
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() =>
-                      closeWindow(
-                        Array.from(openWindows)[openWindows.size - 1] ?? ""
-                      )
-                    }
-                    className="
-                      w-3 h-3 rounded-full
-                      bg-[#FF5F57] hover:bg-[#FF4940]
-                      transition-colors
-                      group relative
-                    "
-                  >
-                    {isHoveringControls && (
-                      <span className="absolute inset-0 flex items-center justify-center text-[8px] text-black/60">
-                        ✕
-                      </span>
-                    )}
-                  </button>
-
-                  <button
-                    className="
-                      w-3 h-3 rounded-full
-                      bg-[#FEBC2E] hover:bg-[#FDB300]
-                      transition-colors
-                      group relative
-                    "
-                  >
-                    {isHoveringControls && (
-                      <span className="absolute inset-0 flex items-center justify-center text-[8px] text-black/60">
-                        −
-                      </span>
-                    )}
-                  </button>
-
-                  <button
-                    className="
-                      w-3 h-3 rounded-full
-                      bg-[#28C840] hover:bg-[#1FA932]
-                      transition-colors
-                      group relative
-                    "
-                  >
-                    {isHoveringControls && (
-                      <span className="absolute inset-0 flex items-center justify-center text-[8px] text-black/60">
-                        ⤢
-                      </span>
-                    )}
-                  </button>
-                </div>
-
-                <div className="absolute left-1/2 -translate-x-1/2 text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {Array.from(openWindows)[openWindows.size - 1] ?? ""}
-                </div>
-
-                <div className="w-[60px]"></div>
-              </div>
+              <WindowTitleBar
+                title={app.label}
+                onClose={() => closeWindow(windowId)}
+              />
 
               <div className="flex-1 overflow-auto p-6">
                 <div className="flex items-center justify-center h-full text-gray-500">
-                  Window Content
+                  {app.label} Content
                 </div>
               </div>
             </div>
           </motion.div>
-        </>
-      )}
+        );
+      })}
     </AnimatePresence>
   );
 }

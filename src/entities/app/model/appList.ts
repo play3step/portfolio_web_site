@@ -32,3 +32,7 @@ export const appList: AppConfig[] = [
     icon: "/icon/siri.svg",
   },
 ];
+
+export const getAppById = (id: string): AppConfig | undefined => {
+  return appList.find((app) => app.id === id);
+};
