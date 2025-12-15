@@ -1,8 +1,8 @@
 "use client";
 
+import { useWindowState } from "@/src/features";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { useWindowState } from "../model/useWindowState";
 
 export default function AppWindow() {
   const [isHoveringControls, setIsHoveringControls] = useState(false);

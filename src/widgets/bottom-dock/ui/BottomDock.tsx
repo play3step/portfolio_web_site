@@ -1,7 +1,7 @@
 "use client";
 
-import { DockItem } from "@/src/shared";
-import { useWindowState } from "../../app-window";
+import { DockItem, appList } from "@/src/entities";
+import { useWindowState } from "@/src/features";
 
 const BottomDock = () => {
   const openWindow = useWindowState((state) => state.openWindow);
@@ -13,27 +13,15 @@ const BottomDock = () => {
     border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.37)] 
     flex items-center justify-center gap-3 px-4 py-3 rounded-2xl"
     >
-      <DockItem
-        item={{ label: "settings" }}
-        onClick={() => openWindow("settings")}
-      />
-      <DockItem
-        item={{ label: "moreview" }}
-        onClick={() => openWindow("moreview")}
-      />
-      <DockItem
-        item={{ label: "planding" }}
-        onClick={() => openWindow("planding")}
-      />
-      <DockItem
-        item={{ label: "maplelink" }}
-        onClick={() => openWindow("maplelink")}
-      />
-      <DockItem
-        item={{ label: "zoopzoop" }}
-        onClick={() => openWindow("zoopzoop")}
-      />
-      <DockItem item={{ label: "siri" }} onClick={() => openWindow("siri")} />
+      {appList.map((app) => (
+        <DockItem
+          key={app.id}
+          id={app.id}
+          label={app.label}
+          icon={app.icon}
+          onClick={() => openWindow(app.id)}
+        />
+      ))}
     </section>
   );
 };

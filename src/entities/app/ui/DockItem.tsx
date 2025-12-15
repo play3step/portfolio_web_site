@@ -2,23 +2,13 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { AppConfig } from "../model/type";
 
-type DockItemLabelType =
-  | "moreview"
-  | "planding"
-  | "maplelink"
-  | "zoopzoop"
-  | "settings"
-  | "siri";
-
-interface DockItemProps {
-  item: {
-    label: DockItemLabelType;
-  };
+interface DockItemProps extends AppConfig {
   onClick: () => void;
 }
 
-const DockItem = ({ item, onClick }: DockItemProps) => {
+const DockItem = ({ id, label, icon, onClick }: DockItemProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -33,7 +23,7 @@ const DockItem = ({ item, onClick }: DockItemProps) => {
           shadow-lg
         "
         >
-          {item.label}
+          {label || id}
         </div>
       )}
 
@@ -55,8 +45,8 @@ const DockItem = ({ item, onClick }: DockItemProps) => {
         "
       >
         <Image
-          src={`/icon/${item.label}.svg`}
-          alt={item.label}
+          src={icon}
+          alt={label}
           width={64}
           height={64}
           className="object-cover"
