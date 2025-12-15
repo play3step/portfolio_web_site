@@ -15,9 +15,10 @@ interface DockItemProps {
   item: {
     label: DockItemLabelType;
   };
+  onClick: () => void;
 }
 
-const DockItem = ({ item }: DockItemProps) => {
+const DockItem = ({ item, onClick }: DockItemProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -37,6 +38,7 @@ const DockItem = ({ item }: DockItemProps) => {
       )}
 
       <button
+        onClick={onClick}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         className="

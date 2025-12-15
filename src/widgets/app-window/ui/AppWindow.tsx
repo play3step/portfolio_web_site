@@ -2,31 +2,22 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import { useWindowState } from "../model/useWindowState";
 
-interface AppWindowProps {
-  isOpen: boolean;
-  onClose: () => void;
-  title?: string;
-  children?: React.ReactNode;
-}
-
-export default function AppWindow({
-  isOpen,
-  onClose,
-  title = "Untitled",
-  children,
-}: AppWindowProps) {
+export default function AppWindow() {
   const [isHoveringControls, setIsHoveringControls] = useState(false);
+  const openWindows = useWindowState((state) => state.openWindows);
+  const closeWindow = useWindowState((state) => state.closeWindow);
 
   return (
     <AnimatePresence>
-      {isOpen && (
+      {openWindows.size > 0 && (
         <>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={onClose}
+            onClick={() => closeWindow(Array.from(openWindows)[0] ?? "")}
           />
 
           <motion.div
@@ -78,7 +69,11 @@ export default function AppWindow({
               >
                 <div className="flex items-center gap-2">
                   <button
-                    onClick={onClose}
+                    onClick={() =>
+                      closeWindow(
+                        Array.from(openWindows)[openWindows.size - 1] ?? ""
+                      )
+                    }
                     className="
                       w-3 h-3 rounded-full
                       bg-[#FF5F57] hover:bg-[#FF4940]
@@ -125,18 +120,16 @@ export default function AppWindow({
                 </div>
 
                 <div className="absolute left-1/2 -translate-x-1/2 text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {title}
+                  {Array.from(openWindows)[openWindows.size - 1] ?? ""}
                 </div>
 
                 <div className="w-[60px]"></div>
               </div>
 
               <div className="flex-1 overflow-auto p-6">
-                {children || (
-                  <div className="flex items-center justify-center h-full text-gray-500">
-                    Window Content
-                  </div>
-                )}
+                <div className="flex items-center justify-center h-full text-gray-500">
+                  Window Content
+                </div>
               </div>
             </div>
           </motion.div>
