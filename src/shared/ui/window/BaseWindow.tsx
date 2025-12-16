@@ -1,19 +1,24 @@
-"use client";
-
 import { motion, AnimatePresence } from "framer-motion";
-import { useWindowState } from "@/src/features/window-manager";
+
 import { getAppById } from "@/src/entities/app";
 
-import { windowVariants } from "../lib/animations";
-import { WindowTitleBar } from "./WindowTitleBar";
+import { windowVariants } from "../../lib/animations";
+import { WindowTitleBar } from "./BaseWindowTitleBar";
 
-export default function AppWindow() {
-  const openWindows = useWindowState((state) => state.openWindows);
-  const closeWindow = useWindowState((state) => state.closeWindow);
+interface BaseWindowProps {
+  windows: Set<string>;
+  children: React.ReactNode;
+  closeWindow: (id: string) => void;
+}
 
+export const BaseWindow = ({
+  windows,
+  closeWindow,
+  children,
+}: BaseWindowProps) => {
   return (
     <AnimatePresence>
-      {Array.from(openWindows).map((windowId, index) => {
+      {Array.from(windows).map((windowId, index) => {
         const app = getAppById(windowId);
         if (!app) return null;
 
@@ -44,7 +49,7 @@ export default function AppWindow() {
 
               <div className="flex-1 overflow-auto p-6">
                 <div className="flex items-center justify-center h-full text-gray-500">
-                  {app.label} Content
+                  {children}
                 </div>
               </div>
             </div>
@@ -53,4 +58,4 @@ export default function AppWindow() {
       })}
     </AnimatePresence>
   );
-}
+};
