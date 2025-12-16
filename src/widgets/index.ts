@@ -1,2 +1,2 @@
 export * from "./bottom-dock";
-export * from "./app-window";
+export * from "./settings-window";
