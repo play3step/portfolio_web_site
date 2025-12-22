@@ -5,9 +5,13 @@ import { useEffect, useState } from "react";
 
 interface ChatMessageProps {
   message: Message;
+  onTypingComplete?: () => void;
 }
 
-export const ChatMessage = ({ message }: ChatMessageProps) => {
+export const ChatMessage = ({
+  message,
+  onTypingComplete,
+}: ChatMessageProps) => {
   const [displayedContent, setDisplayedContent] = useState("");
   const [isTypingComplete, setIsTypingComplete] = useState(false);
 
@@ -23,6 +27,7 @@ export const ChatMessage = ({ message }: ChatMessageProps) => {
         } else {
           setIsTypingComplete(true);
           clearInterval(typingInterval);
+          onTypingComplete?.();
         }
       }, 30);
 

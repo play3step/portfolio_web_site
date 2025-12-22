@@ -24,14 +24,13 @@ export const ChatbotWindow = () => {
     setIsLoading(true);
 
     setTimeout(() => {
-      setIsLoading(false);
-
       if (option.hasFollowUp) {
         setCurrentOptionGroup(option.category ?? "main");
       }
 
       if (option.category === "back") {
         setCurrentOptionGroup("main");
+        setIsLoading(false);
         return;
       }
       setMessages((prev) => [
@@ -62,6 +61,10 @@ export const ChatbotWindow = () => {
     }, 800);
   };
 
+  const handleTypingComplete = () => {
+    setIsLoading(false);
+  };
+
   const hasMessages = messages.length > 0;
   const currentOptions = OPTION_GROUPS[currentOptionGroup] || QUICK_OPTIONS;
 
@@ -70,7 +73,11 @@ export const ChatbotWindow = () => {
       {!hasMessages ? (
         <InitialScreen />
       ) : (
-        <MessageList messages={messages} isLoading={isLoading} />
+        <MessageList
+          messages={messages}
+          isLoading={isLoading}
+          onTypingComplete={handleTypingComplete}
+        />
       )}
 
       <div className="p-6 pt-4 space-y-3">
