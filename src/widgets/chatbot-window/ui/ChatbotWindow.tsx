@@ -40,6 +40,7 @@ export const ChatbotWindow = () => {
           type: "bot",
           content:
             CHAT_RESPONSES[option.category ?? ""] || "답변을 준비중입니다.",
+          isTyping: true,
         },
       ]);
     }, 500);
@@ -55,7 +56,7 @@ export const ChatbotWindow = () => {
     setTimeout(() => {
       setMessages((prev) => [
         ...prev,
-        { type: "bot", content: "메시지를 받았습니다." },
+        { type: "bot", content: "메시지를 받았습니다.", isTyping: true },
       ]);
       setIsLoading(false);
     }, 800);

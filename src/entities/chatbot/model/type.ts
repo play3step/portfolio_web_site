@@ -2,6 +2,7 @@ export interface Message {
   type: "user" | "bot";
   content: string;
   timestamp?: Date;
+  isTyping?: boolean;
 }
 
 export interface QuickOption {
