@@ -16,7 +16,10 @@ export const MessageList = ({ messages, isLoading }: MessageListProps) => {
   }, [messages]);
 
   return (
-    <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4" ref={scrollRef}>
+    <div
+      className="flex-1 overflow-y-auto px-6 py-6 space-y-4 whitespace-pre-wrap"
+      ref={scrollRef}
+    >
       {messages.map((msg, idx) => (
         <ChatMessage key={idx} message={msg} />
       ))}

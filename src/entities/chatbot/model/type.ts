@@ -8,4 +8,5 @@ export interface QuickOption {
   id: string;
   label: string;
   category?: string;
+  hasFollowUp?: boolean;
 }
