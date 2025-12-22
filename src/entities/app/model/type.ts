@@ -4,7 +4,7 @@ export type AppId =
   | "maplelink"
   | "zoopzoop"
   | "settings"
-  | "siri";
+  | "chatbot";
 
 export interface WindowProps {
   width?: number;

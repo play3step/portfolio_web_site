@@ -1,10 +1,11 @@
 "use client";
 
-import { BottomDock, SettingsWindow } from "@/src/widgets";
+import { BottomDock, ChatbotWindow, SettingsWindow } from "@/src/widgets";
 import { ManagedWindow } from "@/src/features/window-manager";
 
 const windowComponentMap = {
   settings: SettingsWindow,
+  chatbot: ChatbotWindow,
 };
 export default function Home() {
   return (

@@ -32,10 +32,10 @@ export const appList: AppConfig[] = [
     windowProps: { width: 600, height: 500 },
   },
   {
-    id: "siri",
-    label: "Siri",
+    id: "chatbot",
+    label: "Chatbot",
     icon: "/icon/siri.svg",
-    windowProps: { width: 400, height: 600 },
+    windowProps: { width: 580, height: 800 },
   },
 ];
 
