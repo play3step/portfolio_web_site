@@ -45,20 +45,54 @@ export const ChatbotWindow = () => {
     }, 500);
   };
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (!input.trim()) return;
 
-    setMessages((prev) => [...prev, { type: "user", content: input }]);
+    const userMessage = input;
+    setMessages((prev) => [...prev, { type: "user", content: userMessage }]);
     setInput("");
     setIsLoading(true);
 
-    setTimeout(() => {
+    try {
+      // Gemini API 호출
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: userMessage }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "응답을 받는데 실패했습니다.");
+      }
+
+      // 성공적인 응답
       setMessages((prev) => [
         ...prev,
-        { type: "bot", content: "메시지를 받았습니다.", isTyping: true },
+        {
+          type: "bot",
+          content: data.response,
+          isTyping: true,
+        },
+      ]);
+    } catch (error) {
+      console.error("메시지 전송 오류:", error);
+      setMessages((prev) => [
+        ...prev,
+        {
+          type: "bot",
+          content:
+            error instanceof Error
+              ? error.message
+              : "죄송합니다. 오류가 발생했습니다. 잠시 후 다시 시도해주세요.",
+          isTyping: true,
+        },
       ]);
       setIsLoading(false);
-    }, 800);
+    }
   };
 
   const handleTypingComplete = () => {
