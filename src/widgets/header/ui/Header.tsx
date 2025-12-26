@@ -1,3 +1,4 @@
+import { DownloadPortfolio } from "@/src/features";
 import React from "react";
 
 export const Header = () => {
@@ -10,7 +11,7 @@ export const Header = () => {
      text-white"
     >
       <p>hyeon&apos;s portfolio</p>
-      <div className="cursor-pointer">download</div>
+      <DownloadPortfolio />
     </header>
   );
 };
