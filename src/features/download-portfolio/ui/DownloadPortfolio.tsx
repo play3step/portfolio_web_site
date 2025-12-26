@@ -7,6 +7,12 @@ export const DownloadPortfolio = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleDownload = async () => {
+    const userAgent = navigator.userAgent.toLowerCase();
+    if (userAgent.includes("kakao") || userAgent.includes("instagram")) {
+      window.open("/portfolio.pdf", "_blank");
+      return;
+    }
+
     setIsLoading(true);
     await downloadHelpers("/portfolio.pdf", "hyeon's portfolio.pdf");
     setIsLoading(false);
