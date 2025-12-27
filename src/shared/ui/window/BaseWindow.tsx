@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useDragControls } from "framer-motion";
 import { ReactNode } from "react";
 import { WindowTitleBar } from "./BaseWindowTitleBar";
 
@@ -20,14 +20,20 @@ export const BaseWindow = ({
   height = 400,
   children,
 }: BaseWindowProps) => {
+  const controls = useDragControls();
+
   return (
     <motion.div
-      initial={{ scale: 0, opacity: 0, y: 100 }}
-      animate={{ scale: 1, opacity: 1, y: 0 }}
-      exit={{ scale: 0, opacity: 0, y: 100 }}
+      drag
+      dragControls={controls}
+      dragListener={false}
+      dragMomentum={false}
+      initial={{ scale: 0, opacity: 0, x: "-50%", y: "-50%" }}
+      animate={{ scale: 1, opacity: 1, x: "-50%", y: "-50%" }}
+      exit={{ scale: 0, opacity: 0 }}
       transition={{ type: "spring", stiffness: 300, damping: 25 }}
-      className="fixed inset-0 m-auto"
-      style={{ width: `${width}px`, height: `${height}px` }}
+      className="fixed left-1/2 top-1/2"
+      style={{ width: `${width}px`, height: `${height}px`, zIndex: 50 }}
     >
       <div
         className="
@@ -39,7 +45,12 @@ export const BaseWindow = ({
         overflow-hidden flex flex-col
       "
       >
-        <WindowTitleBar title={title} onClose={onClose} />
+        <div
+          onPointerDown={(e) => controls.start(e)}
+          className="cursor-grab active:cursor-grabbing"
+        >
+          <WindowTitleBar title={title} onClose={onClose} />
+        </div>
 
         <div className="flex-1 overflow-auto p-6">{children}</div>
       </div>
