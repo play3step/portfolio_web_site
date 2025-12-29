@@ -7,6 +7,9 @@ import { Header } from "@/src/widgets";
 export const metadata: Metadata = {
   title: "deemo",
   description: "deemo portfolio",
+  icons: {
+    icon: "/icon/deemo.svg",
+  },
 };
 
 export default function RootLayout({
