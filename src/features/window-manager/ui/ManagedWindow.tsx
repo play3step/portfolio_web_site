@@ -16,24 +16,32 @@ interface ManagedWindowProps {
 
 export const ManagedWindow = ({ componentMap }: ManagedWindowProps) => {
   const openWindows = useWindowState((state) => state.openWindows);
+  const topWindow = useWindowState((state) => state.topWindow);
+  const bringToFront = useWindowState((state) => state.bringToFront);
   const closeWindow = useWindowState((state) => state.closeWindow);
+
+  const windowsArray = Array.from(openWindows);
 
   return (
     <AnimatePresence>
-      {Array.from(openWindows).map((windowId, index) => {
+      {windowsArray.map((windowId, index) => {
         const app = getAppById(windowId);
         const Component = componentMap[windowId];
 
         if (!app) return null;
 
+        const isTop = windowId === topWindow;
+        const zIndex = isTop ? 1000 : 50 + index;
+
         return (
-          <div key={windowId} style={{ zIndex: 50 + index }}>
+          <div key={windowId} style={{ zIndex }}>
             <BaseWindow
               id={windowId}
               title={app.label}
               onClose={() => closeWindow(windowId)}
               width={app.windowProps?.width}
               height={app.windowProps?.height}
+              onClick={() => bringToFront(windowId)}
             >
               {Component ? (
                 <Component appId={windowId} />

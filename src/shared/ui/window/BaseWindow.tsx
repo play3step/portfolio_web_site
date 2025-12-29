@@ -11,6 +11,7 @@ interface BaseWindowProps {
   width?: number;
   height?: number;
   children: ReactNode;
+  onClick: () => void;
 }
 
 export const BaseWindow = ({
@@ -19,6 +20,7 @@ export const BaseWindow = ({
   width = 600,
   height = 400,
   children,
+  onClick,
 }: BaseWindowProps) => {
   const controls = useDragControls();
 
@@ -28,6 +30,8 @@ export const BaseWindow = ({
       dragControls={controls}
       dragListener={false}
       dragMomentum={false}
+      onDragStart={onClick}
+      onClick={onClick}
       initial={{ scale: 0, opacity: 0, x: "-50%", y: "-50%" }}
       animate={{ scale: 1, opacity: 1, x: "-50%", y: "-50%" }}
       exit={{ scale: 0, opacity: 0 }}
