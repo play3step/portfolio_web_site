@@ -3,12 +3,13 @@ import Script from "next/script"; // 1. Script 컴포넌트 임입
 import "./globals.css";
 import { BackgroundImage } from "@/src/entities";
 import { Header } from "@/src/widgets";
+import { AppIcons } from "@/src/shared";
 
 export const metadata: Metadata = {
   title: "deemo",
   description: "deemo portfolio",
   icons: {
-    icon: "/icon/deemo.svg",
+    icon: AppIcons.deemo.src,
   },
 };
 

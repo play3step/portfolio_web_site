@@ -1,10 +1,11 @@
 import { Project } from "../model/type";
+import { AppIcons } from "@/src/shared";
 
 export const projects: Project[] = [
   {
     id: "moreview",
     title: "MoreView",
-    image: "/icon/moreview.svg",
+    image: AppIcons.moreview,
     tags: [
       "React",
       "Three.js",
@@ -20,7 +21,7 @@ export const projects: Project[] = [
   {
     id: "planding",
     title: "Planding",
-    image: "/icon/planding.svg",
+    image: AppIcons.planding,
     tags: [
       "React",
       "TypeScript",
@@ -37,7 +38,7 @@ export const projects: Project[] = [
   {
     id: "maplelink",
     title: "Maplelink",
-    image: "/icon/maplelink.svg",
+    image: AppIcons.maplelink,
     tags: [
       "React",
       "TypeScript",
@@ -52,7 +53,7 @@ export const projects: Project[] = [
   {
     id: "zoopzoop",
     title: "ZoopZoop",
-    image: "/icon/zoopzoop.svg",
+    image: AppIcons.zoopzoop,
     tags: [
       "Next.js",
       "Tailwind CSS",
@@ -67,7 +68,7 @@ export const projects: Project[] = [
   {
     id: "deemo",
     title: "Deemo",
-    image: "/icon/deemo.svg",
+    image: AppIcons.deemo,
     tags: ["Next.js", "Tailwind CSS", "Framer Motion", "Zustand"],
     introduce:
       "단순 나열식 포트폴리오를 벗어나, 인터랙티브한 사용자 경험을 제공하는 Mac OS 컨셉의 개인 사이트입니다.",

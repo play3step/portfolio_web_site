@@ -1,46 +1,47 @@
 import { AppConfig } from "./type";
+import { AppIcons } from "@/src/shared";
 
 export const appList: AppConfig[] = [
   {
     id: "moreview",
     label: "MoreView",
-    icon: "/icon/moreview.svg",
+    icon: AppIcons.moreview,
     windowProps: { width: 800, height: 600 },
   },
   {
     id: "planding",
     label: "Planding",
-    icon: "/icon/planding.svg",
+    icon: AppIcons.planding,
     windowProps: { width: 800, height: 600 },
   },
   {
     id: "maplelink",
     label: "Maplelink",
-    icon: "/icon/maplelink.svg",
+    icon: AppIcons.maplelink,
     windowProps: { width: 800, height: 600 },
   },
   {
     id: "zoopzoop",
     label: "ZoopZoop",
-    icon: "/icon/zoopzoop.svg",
+    icon: AppIcons.zoopzoop,
     windowProps: { width: 800, height: 600 },
   },
   {
     id: "deemo",
     label: "Deemo",
-    icon: "/icon/deemo.svg",
+    icon: AppIcons.deemo,
     windowProps: { width: 800, height: 600 },
   },
   {
     id: "settings",
     label: "Settings",
-    icon: "/icon/settings.svg",
+    icon: AppIcons.settings,
     windowProps: { width: 600, height: 500 },
   },
   {
     id: "chatbot",
     label: "Chatbot",
-    icon: "/icon/siri.svg",
+    icon: AppIcons.chatbot,
     windowProps: { width: 580, height: 800 },
   },
 ];

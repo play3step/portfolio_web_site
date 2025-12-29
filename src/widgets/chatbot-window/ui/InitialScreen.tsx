@@ -1,11 +1,12 @@
 import Image from "next/image";
+import { AppIcons } from "@/src/shared";
 
 export const InitialScreen = () => {
   return (
     <div className="flex-1 flex flex-col items-center justify-center px-8">
       <div className="relative mb-2">
         <Image
-          src="/icon/glass.svg"
+          src={AppIcons.glass}
           alt="chatbot-window-logo"
           width={200}
           height={200}
