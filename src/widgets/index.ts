@@ -2,3 +2,4 @@ export * from "./bottom-dock";
 export * from "./settings-window";
 export * from "./chatbot-window";
 export * from "./header";
+export * from "./project-window";

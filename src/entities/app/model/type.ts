@@ -3,6 +3,7 @@ export type AppId =
   | "planding"
   | "maplelink"
   | "zoopzoop"
+  | "deemo"
   | "settings"
   | "chatbot";
 
@@ -16,4 +17,12 @@ export interface AppConfig {
   label: string;
   icon: string;
   windowProps?: WindowProps;
+}
+
+export interface Project {
+  id: string;
+  title: string;
+  image: string;
+  tags: string[];
+  introduce: string;
 }

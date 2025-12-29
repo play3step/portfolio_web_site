@@ -26,6 +26,12 @@ export const appList: AppConfig[] = [
     windowProps: { width: 800, height: 600 },
   },
   {
+    id: "deemo",
+    label: "Deemo",
+    icon: "/icon/deemo.svg",
+    windowProps: { width: 800, height: 600 },
+  },
+  {
     id: "settings",
     label: "Settings",
     icon: "/icon/settings.svg",

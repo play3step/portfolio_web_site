@@ -1,11 +1,21 @@
 "use client";
 
-import { BottomDock, ChatbotWindow, SettingsWindow } from "@/src/widgets";
+import {
+  BottomDock,
+  ChatbotWindow,
+  ProjectWindow,
+  SettingsWindow,
+} from "@/src/widgets";
 import { ManagedWindow } from "@/src/features/window-manager";
 
 const windowComponentMap = {
   settings: SettingsWindow,
   chatbot: ChatbotWindow,
+  moreview: ProjectWindow,
+  planding: ProjectWindow,
+  maplelink: ProjectWindow,
+  zoopzoop: ProjectWindow,
+  deemo: ProjectWindow,
 };
 export default function Home() {
   return (
