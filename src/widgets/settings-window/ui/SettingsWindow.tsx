@@ -17,9 +17,9 @@ export const SettingsWindow = () => {
         {backgrounds.map((bg) => (
           <button
             key={bg.id}
-            onClick={() => setBackground(bg.path)}
+            onClick={() => setBackground(String(bg.path))}
             className={`relative aspect-video rounded-lg overflow-hidden border-4 transition-all hover:scale-105 ${
-              currentBackground === bg.path
+              currentBackground === String(bg.path)
                 ? "border-blue-500 shadow-lg"
                 : "border-transparent hover:border-gray-300"
             }`}
@@ -31,7 +31,7 @@ export const SettingsWindow = () => {
               className="object-cover"
               sizes="(max-width: 768px) 50vw, 25vw"
             />
-            {currentBackground === bg.path && (
+            {currentBackground === String(bg.path) && (
               <div className="absolute inset-0 bg-blue-500/50 bg-opacity-20 flex items-center justify-center">
                 <span className="text-white px-3 py-1 rounded-full text-sm font-semibold">
                   적용됨
