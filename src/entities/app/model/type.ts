@@ -24,5 +24,15 @@ export interface Project {
   title: string;
   image: string;
   tags: string[];
-  introduce: string;
+  description?: string;
+  features?: string[];
+  gallery?: string[];
+  troubleshooting?: {
+    title: string;
+    content: string;
+  }[];
+  links?: {
+    type: "github" | "live" | "youtube" | "other";
+    url: string;
+  }[];
 }
