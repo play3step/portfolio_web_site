@@ -4,10 +4,10 @@ import { backgrounds, useBackgroundStore } from "@/src/entities";
 import Image from "next/image";
 
 export const SettingsWindow = () => {
-  const currentBackground = useBackgroundStore(
-    (state) => state.currentBackground
+  const currentBackgroundId = useBackgroundStore(
+    (state) => state.currentBackgroundId
   );
-  const setBackground = useBackgroundStore((state) => state.setBackground);
+  const setBackgroundId = useBackgroundStore((state) => state.setBackgroundId);
 
   return (
     <div className="h-full p-6 overflow-y-auto">
@@ -17,9 +17,9 @@ export const SettingsWindow = () => {
         {backgrounds.map((bg) => (
           <button
             key={bg.id}
-            onClick={() => setBackground(String(bg.path))}
+            onClick={() => setBackgroundId(bg.id)}
             className={`relative aspect-video rounded-lg overflow-hidden border-4 transition-all hover:scale-105 ${
-              currentBackground === String(bg.path)
+              currentBackgroundId === bg.id
                 ? "border-blue-500 shadow-lg"
                 : "border-transparent hover:border-gray-300"
             }`}
@@ -31,7 +31,7 @@ export const SettingsWindow = () => {
               className="object-cover"
               sizes="(max-width: 768px) 50vw, 25vw"
             />
-            {currentBackground === String(bg.path) && (
+            {currentBackgroundId === bg.id && (
               <div className="absolute inset-0 bg-blue-500/50 bg-opacity-20 flex items-center justify-center">
                 <span className="text-white px-3 py-1 rounded-full text-sm font-semibold">
                   적용됨

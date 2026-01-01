@@ -1,17 +1,20 @@
 "use client";
 
-import { useBackgroundStore } from "@/src/entities";
+import { useBackgroundStore, backgrounds } from "@/src/entities";
 import Image from "next/image";
 
 export const BackgroundImage = () => {
-  const currentBackground = useBackgroundStore(
-    (state) => state.currentBackground
+  const currentBackgroundId = useBackgroundStore(
+    (state) => state.currentBackgroundId
   );
+
+  const currentBackground =
+    backgrounds.find((bg) => bg.id === currentBackgroundId) || backgrounds[0];
 
   return (
     <Image
-      key={currentBackground}
-      src={currentBackground}
+      key={currentBackground.id}
+      src={currentBackground.path}
       alt="background"
       fill
       className="object-cover -z-10 transition-opacity duration-500"
