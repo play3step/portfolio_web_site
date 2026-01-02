@@ -66,7 +66,9 @@ export const ChatbotWindow = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || "응답을 받는데 실패했습니다.");
+        throw new Error(
+          data.response || data.error || "응답을 받는데 실패했습니다."
+        );
       }
 
       // 성공적인 응답
