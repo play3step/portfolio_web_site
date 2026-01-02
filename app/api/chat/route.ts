@@ -41,12 +41,13 @@ export async function POST(request: NextRequest) {
     if (!message)
       return NextResponse.json({ error: "메시지 누락" }, { status: 400 });
 
-    const prompt = `${createSystemPrompt()}\n\n사용자 질문: ${message}`;
-
     for (const modelName of MODELS) {
       try {
-        const model = genAI.getGenerativeModel({ model: modelName });
-        const result = await model.generateContent(prompt);
+        const model = genAI.getGenerativeModel({
+          model: modelName,
+          systemInstruction: createSystemPrompt(),
+        });
+        const result = await model.generateContent(message);
         const text = result.response.text();
 
         return NextResponse.json({
