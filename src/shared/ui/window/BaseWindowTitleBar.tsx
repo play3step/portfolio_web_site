@@ -25,7 +25,7 @@ export const WindowTitleBar = ({ title, onClose }: WindowTitleBarProps) => {
         <button
           onClick={onClose}
           className="
-            w-3 h-3 rounded-full
+            w-5 h-5 rounded-full
             bg-[#FF5F57] hover:bg-[#FF4940]
             transition-colors
             relative
@@ -40,7 +40,7 @@ export const WindowTitleBar = ({ title, onClose }: WindowTitleBarProps) => {
 
         <button
           className={`
-            w-3 h-3 rounded-full
+            w-5 h-5 rounded-full
             bg-[#FEBC2E] transition-colors  
             relative
           `}
@@ -54,7 +54,7 @@ export const WindowTitleBar = ({ title, onClose }: WindowTitleBarProps) => {
 
         <button
           className={`
-            w-3 h-3 rounded-full
+            w-5 h-5 rounded-full
             bg-[#28C840] transition-colors
             relative
           `}
