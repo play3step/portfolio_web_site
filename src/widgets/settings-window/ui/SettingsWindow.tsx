@@ -3,7 +3,7 @@
 import { backgrounds, useBackgroundStore } from "@/src/entities";
 import Image from "next/image";
 
-export const SettingsWindow = () => {
+export const SettingsWindow = ({ appId }: { appId: string }) => {
   const currentBackgroundId = useBackgroundStore(
     (state) => state.currentBackgroundId
   );

@@ -13,7 +13,7 @@ import {
   OPTION_GROUPS,
 } from "@/src/entities";
 
-export const ChatbotWindow = () => {
+export const ChatbotWindow = ({ appId }: { appId: string }) => {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
