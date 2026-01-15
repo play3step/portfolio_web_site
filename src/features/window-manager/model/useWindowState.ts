@@ -10,8 +10,8 @@ interface WindowState {
 }
 
 export const useWindowState = create<WindowState>((set, get) => ({
-  openWindows: new Set(),
-  topWindow: null,
+  openWindows: new Set(["chatbot"]),
+  topWindow: "chatbot",
 
   openWindow: (id) =>
     set((state) => ({
