@@ -55,12 +55,17 @@ export const ChatbotWindow = ({ appId }: { appId: string }) => {
 
     try {
       // Gemini API 호출
+      const history = messages.map((msg) => ({
+        role: msg.type === "user" ? "user" : "model",
+        parts: [{ text: msg.content }],
+      }));
+
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ message: userMessage }),
+        body: JSON.stringify({ message: userMessage, history }),
       });
 
       const data = await response.json();

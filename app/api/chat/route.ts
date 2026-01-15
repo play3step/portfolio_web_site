@@ -98,7 +98,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { message } = await request.json();
+    const { message, history } = await request.json();
     if (!message)
       return NextResponse.json({ error: "메시지 누락" }, { status: 400 });
 
@@ -119,7 +119,12 @@ export async function POST(request: NextRequest) {
           model: modelName,
           systemInstruction: systemInstruction,
         });
-        const result = await model.generateContent(message);
+
+        const chat = model.startChat({
+          history: history || [],
+        });
+
+        const result = await chat.sendMessage(message);
         const text = result.response.text();
 
         return NextResponse.json({
