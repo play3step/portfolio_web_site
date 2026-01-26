@@ -94,7 +94,7 @@ export async function POST(request: NextRequest) {
             "너무 짧은 시간에 많은 질문을 하셨네요! 잠시 후 다시 시도해 주세요. 😊",
           success: true,
         },
-        { status: 429 }
+        { status: 429 },
       );
     }
 
@@ -143,7 +143,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(
       { error: "모든 AI 모델의 한도가 초과되었습니다." },
-      { status: 429 }
+      { status: 429 },
     );
   } catch (error) {
     console.error("Chat Error:", error);
