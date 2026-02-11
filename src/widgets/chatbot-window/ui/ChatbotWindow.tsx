@@ -12,12 +12,14 @@ import {
   QUICK_OPTIONS,
   OPTION_GROUPS,
 } from "@/src/entities";
+import { useWindowState } from "@/src/features/window-manager/model/useWindowState";
 
 export const ChatbotWindow = ({ appId }: { appId: string }) => {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [currentOptionGroup, setCurrentOptionGroup] = useState("main");
+  const { openWindow } = useWindowState();
 
   const handleOptionClick = (option: (typeof QUICK_OPTIONS)[0]) => {
     setMessages((prev) => [...prev, { type: "user", content: option.label }]);
@@ -33,15 +35,21 @@ export const ChatbotWindow = ({ appId }: { appId: string }) => {
         setIsLoading(false);
         return;
       }
-      setMessages((prev) => [
-        ...prev,
-        {
-          type: "bot",
-          content:
-            CHAT_RESPONSES[option.category ?? ""] || "답변을 준비중입니다.",
-          isTyping: true,
-        },
-      ]);
+
+      const response = CHAT_RESPONSES[option.category ?? ""];
+      const botMessage: Message = {
+        type: "bot",
+        content: typeof response === "string"
+          ? response || "답변을 준비중입니다."
+          : response?.content || "답변을 준비중입니다.",
+        isTyping: true,
+      };
+
+      if (typeof response === "object" && response?.action) {
+        botMessage.action = response.action;
+      }
+
+      setMessages((prev) => [...prev, botMessage]);
     }, 500);
   };
 
@@ -106,6 +114,12 @@ export const ChatbotWindow = ({ appId }: { appId: string }) => {
     setIsLoading(false);
   };
 
+  const handleActionClick = (action: NonNullable<Message["action"]>) => {
+    if (action.type === "openWindow") {
+      openWindow(action.windowId);
+    }
+  };
+
   const hasMessages = messages.length > 0;
   const currentOptions = OPTION_GROUPS[currentOptionGroup] || QUICK_OPTIONS;
 
@@ -118,6 +132,7 @@ export const ChatbotWindow = ({ appId }: { appId: string }) => {
           messages={messages}
           isLoading={isLoading}
           onTypingComplete={handleTypingComplete}
+          onActionClick={handleActionClick}
         />
       )}
 

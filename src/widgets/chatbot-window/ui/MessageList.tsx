@@ -11,6 +11,7 @@ interface MessageListProps {
   messages: Message[];
   isLoading: boolean;
   onTypingComplete: () => void;
+  onActionClick?: (action: NonNullable<Message["action"]>) => void;
 }
 
 const TOP_GAP = 16; // 질문을 상단 조절
@@ -20,6 +21,7 @@ export const MessageList = ({
   messages,
   isLoading,
   onTypingComplete,
+  onActionClick,
 }: MessageListProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -131,7 +133,11 @@ export const MessageList = ({
       <div ref={contentRef} className="space-y-4">
         {messages.map((msg, idx) => (
           <div key={idx} ref={idx === anchorIndex ? anchorRef : undefined}>
-            <ChatMessage message={msg} onTypingComplete={onTypingComplete} />
+            <ChatMessage
+              message={msg}
+              onTypingComplete={onTypingComplete}
+              onActionClick={onActionClick}
+            />
           </div>
         ))}
 

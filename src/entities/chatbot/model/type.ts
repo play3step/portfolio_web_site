@@ -3,6 +3,13 @@ export interface Message {
   content: string;
   timestamp?: Date;
   isTyping?: boolean;
+  action?: MessageAction;
+}
+
+export interface MessageAction {
+  type: "openWindow";
+  windowId: string;
+  label?: string;
 }
 
 export interface QuickOption {

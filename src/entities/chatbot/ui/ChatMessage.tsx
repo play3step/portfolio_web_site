@@ -6,11 +6,13 @@ import { useEffect, useState } from "react";
 interface ChatMessageProps {
   message: Message;
   onTypingComplete?: () => void;
+  onActionClick?: (action: NonNullable<Message["action"]>) => void;
 }
 
 export const ChatMessage = ({
   message,
   onTypingComplete,
+  onActionClick,
 }: ChatMessageProps) => {
   const [displayedContent, setDisplayedContent] = useState("");
   const [isTypingComplete, setIsTypingComplete] = useState(false);
@@ -45,14 +47,24 @@ export const ChatMessage = ({
         message.type === "user" ? "justify-end" : "justify-start"
       }`}
     >
-      <div
-        className={`max-w-[75%] px-5 py-3 rounded-3xl text-base ${
-          message.type === "user"
-            ? "bg-blue-500 text-white"
-            : "bg-gray-100 text-gray-800"
-        }`}
-      >
-        {displayedContent}
+      <div className="flex flex-col gap-2 max-w-[75%]">
+        <div
+          className={`px-5 py-3 rounded-3xl text-base ${
+            message.type === "user"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-100 text-gray-800"
+          }`}
+        >
+          {displayedContent}
+        </div>
+        {isTypingComplete && message.action && (
+          <button
+            onClick={() => onActionClick?.(message.action!)}
+            className="self-start px-4 py-2 bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-full text-sm font-medium transition-colors"
+          >
+            {message.action.label || "자세히 보기"}
+          </button>
+        )}
       </div>
     </div>
   );
