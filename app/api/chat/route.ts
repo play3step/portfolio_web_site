@@ -1,19 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextRequest, NextResponse } from "next/server";
 import knowledgeBase from "@/src/entities/chatbot/model/knowledge-base.json";
-import { Redis } from "@upstash/redis";
-import { Ratelimit } from "@upstash/ratelimit";
-
-const redis = new Redis({
-  url: process.env.KV_REST_API_URL,
-  token: process.env.KV_REST_API_TOKEN,
-});
-
-const ratelimit = new Ratelimit({
-  redis: redis,
-  limiter: Ratelimit.slidingWindow(4, "1 m"),
-  analytics: true,
-});
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GEMINI_API_KEY || "");
 const MODELS = ["gemini-2.5-flash", "gemini-2.5-flash-lite"];
@@ -84,20 +71,6 @@ function createSystemPrompt(): string {
 
 export async function POST(request: NextRequest) {
   try {
-    const ip = request.headers.get("x-forwarded-for") ?? "127.0.0.1";
-    const { success } = await ratelimit.limit(ip);
-
-    if (!success) {
-      return NextResponse.json(
-        {
-          response:
-            "너무 짧은 시간에 많은 질문을 하셨네요! 잠시 후 다시 시도해 주세요. 😊",
-          success: true,
-        },
-        { status: 429 },
-      );
-    }
-
     const { message, history } = await request.json();
     if (!message)
       return NextResponse.json({ error: "메시지 누락" }, { status: 400 });
